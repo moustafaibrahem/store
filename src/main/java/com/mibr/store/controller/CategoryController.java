@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -40,6 +41,7 @@ public class CategoryController {
         }
     }
 
+/*
     @PostMapping("/{id}/addHistory")
     public String addHistory(@PathVariable Long id, @RequestParam int quantity, @RequestParam String status) {
         Optional<Category> category = categoryService.getCategoryById(id);
@@ -63,6 +65,21 @@ public class CategoryController {
             return "redirect:/categories";
         }
     }
+*/
+@PostMapping("/{id}/addHistory")
+public String addHistory(@PathVariable("id") Long id,
+                         @RequestParam("quantity") int quantity,
+                         @RequestParam("status") String status,
+                         RedirectAttributes redirectAttributes) {
+    try {
+        categoryService.addOrDeleteQuantity(id, quantity, status);
+        redirectAttributes.addFlashAttribute("message", "Action performed successfully.");
+    } catch (IllegalArgumentException e) {
+        redirectAttributes.addFlashAttribute("error", e.getMessage());
+    }
+    return "redirect:/categories/" + id;
+}
+
     @PostMapping("/add")
     public String addCategory(@RequestParam String name, @RequestParam int quantity) {
         Category newCategory = new Category();
