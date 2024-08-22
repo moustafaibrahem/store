@@ -5,11 +5,13 @@ import com.mibr.store.data.category.CategoryRepository;
 import com.mibr.store.data.history.History;
 import com.mibr.store.data.history.HistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -19,6 +21,9 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
     @Autowired
     private HistoryRepository historyRepository;
+    @Autowired
+    private MessageSource messageSource;
+
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
@@ -32,13 +37,14 @@ public class CategoryService {
         categoryRepository.save(category);
     }
     @Transactional
-    public void addOrDeleteQuantity(Long categoryId, int quantity, String status) throws IllegalArgumentException {
+    public void addOrDeleteQuantity(Long categoryId, int quantity, String status, Locale locale) throws IllegalArgumentException {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category ID"));
 
         if ("Delete".equals(status)) {
             if (category.getQuantity() < quantity) {
-                throw new IllegalArgumentException("Insufficient quantity to delete. The quantity cannot be negative.");
+                String errorMessage = messageSource.getMessage("error.insufficientQuantity", null, locale);
+                throw new IllegalArgumentException(errorMessage);
             }
             category.setQuantity(category.getQuantity() - quantity);
         } else if ("Add".equals(status)) {

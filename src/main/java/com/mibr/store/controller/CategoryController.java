@@ -5,11 +5,13 @@ import com.mibr.store.data.history.History;
 import com.mibr.store.service.CategoryService;
 import com.mibr.store.service.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Locale;
 import java.util.Optional;
 
 
@@ -22,6 +24,9 @@ public class CategoryController {
 
     @Autowired
     private HistoryService historyService;
+    @Autowired
+    private MessageSource messageSource;
+
 
     @GetMapping
     public String listCategories(Model model) {
@@ -70,10 +75,12 @@ public class CategoryController {
 public String addHistory(@PathVariable("id") Long id,
                          @RequestParam("quantity") int quantity,
                          @RequestParam("status") String status,
+                         Locale locale,
                          RedirectAttributes redirectAttributes) {
     try {
-        categoryService.addOrDeleteQuantity(id, quantity, status);
-        redirectAttributes.addFlashAttribute("message", "Action performed successfully.");
+        categoryService.addOrDeleteQuantity(id, quantity, status, locale);
+        String successMessage = messageSource.getMessage("success.actionPerformed", null, locale);
+        redirectAttributes.addFlashAttribute("message", successMessage);
     } catch (IllegalArgumentException e) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
     }
