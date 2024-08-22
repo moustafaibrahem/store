@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Categories</title>
+    <script>
+        // JavaScript function to toggle the visibility of the form
+        function toggleForm() {
+            var form = document.getElementById("addCategoryForm");
+            if (form.style.display === "none") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>Categories</h1>
+
+<!-- Table to display categories -->
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${categories}">
+        <td th:text="${category.id}"></td>
+        <td th:text="${category.name}"></td>
+        <td th:text="${category.quantity}"></td>
+        <td>
+            <!-- Link to view category history -->
+            <a th:href="@{/categories/{id}(id=${category.id})}">View History</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Button to toggle the form visibility -->
+<button onclick="toggleForm()">Add New Category</button>
+
+<!-- Form to add a new category, initially hidden -->
+<div id="addCategoryForm" style="display:none;">
+    <h2>Add New Category</h2>
+    <form th:action="@{/categories/add}" method="post">
+        <label for="name">Category Name:</label>
+        <input type="text" id="name" name="name" required/>
+
+        <label for="quantity">Initial Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="0" readonly/>
+
+        <button type="submit">Add Category</button>
+    </form>
+</div>
+</body>
+</html>
