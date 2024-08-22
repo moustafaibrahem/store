@@ -15,40 +15,45 @@
     <!-- Display success message if exists -->
     <div th:if="${message != null}" class="alert alert-success" th:text="${message}"></div>
 
+    <h2 th:text="#{history.addRecord}">إضافة سجل جديد</h2>
+    <form th:action="@{/categories/{id}/addHistory(id=${category.id})}" method="post" class="form-inline enhanced-form">
+        <div class="form-group">
+            <label for="quantity" th:text="#{history.quantity}">الكمية:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="status" th:text="#{history.status}">الحالة:</label>
+            <select id="status" name="status" class="form-control">
+                <option value="Add" th:text="#{history.add}">إضافة</option>
+                <option value="Delete" th:text="#{history.delete}">حذف</option>
+            </select>
+        </div>
+        <div class="form-group form-group-button">
+            <button type="submit" class="btn btn-primary" th:text="#{history.submit}">إرسال</button>
+        </div>
+    </form>
+    <a th:href="@{/categories}" class="btn btn-back" th:text="#{history.backToCategories}">العودة إلى الفئات</a>
+
     <h2 th:text="#{history.title}">السجل</h2>
     <table>
         <thead>
         <tr>
-            <th th:text="#{history.date}">التاريخ</th>
-            <th th:text="#{history.action}">الإجراء</th>
             <th th:text="#{history.quantity}">الكمية</th>
+            <th th:text="#{history.action}">الإجراء</th>
+            <th th:text="#{history.date}">التاريخ</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="history : ${history}">
-            <td class="date-cell" th:text="${history.formattedDate}"></td>
+            <td th:text="${history.quantity}"></td>
             <td>
                 <span th:if="${history.status == 'Add'}" th:text="#{history.add}">إضافة</span>
                 <span th:if="${history.status == 'Delete'}" th:text="#{history.delete}">حذف</span>
             </td>
-            <td th:text="${history.quantity}"></td>
+            <td class="date-cell" th:text="${history.formattedDate}"></td>
         </tr>
         </tbody>
     </table>
-
-    <h2 th:text="#{history.addRecord}">إضافة سجل جديد</h2>
-    <form th:action="@{/categories/{id}/addHistory(id=${category.id})}" method="post">
-        <label th:text="#{history.quantity}">الكمية:</label>
-        <input type="number" id="quantity" name="quantity" min="1" required oninput="validateQuantity()" />
-        <label th:text="#{history.status}">الحالة:</label>
-        <select name="status">
-            <option value="Add" th:text="#{history.add}">إضافة</option>
-            <option value="Delete" th:text="#{history.delete}">حذف</option>
-        </select>
-        <button type="submit" th:text="#{history.submit}">إرسال</button>
-    </form>
-
-    <a th:href="@{/categories}" class="btn btn-back" th:text="#{history.backToCategories}">العودة إلى الفئات</a>
 </div>
 </body>
 </html>

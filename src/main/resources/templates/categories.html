@@ -2,18 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{categories.title}">الفئات</title>
+    <title th:text="#{categories.title}">المخزن</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
-    <script>
-        function toggleForm() {
-            var form = document.getElementById("addCategoryForm");
-            form.style.display = (form.style.display === "none") ? "block" : "none";
-        }
-    </script>
 </head>
 <body>
 <div class="container">
-    <!-- Language Switch Links -->
     <div style="text-align: left;">
         <a th:href="@{?lang=en}" th:classappend="${#locale.language == 'en'} ? 'active'">English</a> |
         <a th:href="@{?lang=ar}" th:classappend="${#locale.language == 'ar'} ? 'active'">العربية</a>
@@ -21,12 +14,10 @@
 
     <h1 th:text="#{categories.title}">الفئات</h1>
 
-    <!-- Table to display categories -->
+    <!-- Categories Table -->
     <table>
         <thead>
         <tr>
-            <!-- Remove the ID column -->
-            <!--<th th:text="#{categories.id}">الرقم</th>-->
             <th th:text="#{categories.name}">الاسم</th>
             <th th:text="#{categories.quantity}">الكمية</th>
             <th th:text="#{categories.actions}">الإجراءات</th>
@@ -34,10 +25,8 @@
         </thead>
         <tbody>
         <tr th:each="category : ${categories}">
-            <!-- Remove the ID column -->
-            <!--<td th:text="${category.id}">1</td>-->
-            <td th:text="${category.name}">مثال</td>
-            <td th:text="${category.quantity}">10</td>
+            <td th:text="${category.name}"></td>
+            <td th:text="${category.quantity}"></td>
             <td>
                 <a th:href="@{/categories/{id}(id=${category.id})}" th:text="#{categories.viewHistory}">عرض السجل</a>
             </td>
@@ -45,22 +34,33 @@
         </tbody>
     </table>
 
-    <!-- Button to toggle the form visibility -->
-    <button onclick="toggleForm()" th:text="#{categories.addNewCategory}">إضافة فئة جديدة</button>
+    <!-- Add New Category Button -->
+    <button onclick="toggleForm()" class="btn btn-primary" th:text="#{categories.addNewCategory}">إضافة فئة جديدة</button>
 
-    <!-- Form to add a new category, initially hidden -->
+    <!-- Add New Category Form -->
     <div id="addCategoryForm" style="display:none; margin-top:20px;">
         <h2 th:text="#{categories.addNewCategory}">إضافة فئة جديدة</h2>
         <form th:action="@{/categories/add}" method="post">
-            <label for="name" th:text="#{categories.categoryName}">اسم الفئة:</label>
-            <input type="text" id="name" name="name" required/>
+            <div class="form-group">
+                <label for="name" th:text="#{categories.categoryName}">اسم الفئة:</label>
+                <input type="text" id="name" name="name" required class="form-control"/>
+            </div>
 
-            <label for="quantity" th:text="#{categories.initialQuantity}">الكمية الأولية:</label>
-            <input type="number" id="quantity" name="quantity" value="0" readonly/>
+            <!-- Hidden input for Initial Quantity -->
+            <input type="hidden" id="quantity" name="quantity" value="0"/>
 
-            <button type="submit" th:text="#{categories.submit}">إضافة</button>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" th:text="#{categories.submit}">إضافة</button>
+            </div>
         </form>
     </div>
 </div>
+
+<script>
+    function toggleForm() {
+        var form = document.getElementById("addCategoryForm");
+        form.style.display = (form.style.display === "none") ? "block" : "none";
+    }
+</script>
 </body>
 </html>
