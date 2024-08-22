@@ -1,9 +1,9 @@
 package com.mibr.store.controller;
 
 import com.mibr.store.data.category.Category;
-import com.mibr.store.data.history.History;
 import com.mibr.store.service.CategoryService;
 import com.mibr.store.service.HistoryService;
+import com.mibr.store.util.NumberConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -11,8 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -22,8 +26,6 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private HistoryService historyService;
     @Autowired
     private MessageSource messageSource;
 
@@ -35,43 +37,53 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public String showCategoryHistory(@PathVariable Long id, Model model) {
-        Optional<Category> category = categoryService.getCategoryById(id);
-        if (category.isPresent()) {
-            model.addAttribute("category", category.get());
-            model.addAttribute("history", historyService.getHistoryByCategoryId(id));
-            return "category_history";
-        } else {
-            return "redirect:/categories";
+    public String getCategoryHistory(@PathVariable Long id, Model model, Locale locale) {
+        Category category = categoryService.findById(id);
+        ZoneId egyptZone = ZoneId.of("Africa/Cairo");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm:ss", locale).withZone(egyptZone);
+
+        List<HistoryDto> history = category.getHistory().stream()
+                .map(h -> new HistoryDto(h.getStatus(), h.getQuantity(), formatDate(h.getDate().atZone(egyptZone), formatter, locale)))
+                .collect(Collectors.toList());
+
+        model.addAttribute("category", category);
+        model.addAttribute("history", history);
+        return "category_history";
+    }
+
+    private String formatDate(ZonedDateTime dateTime, DateTimeFormatter formatter, Locale locale) {
+        String formattedDate = dateTime.format(formatter);
+        if (locale.getLanguage().equals(new Locale("ar").getLanguage())) {
+            return NumberConverter.convertToArabicNumerals(formattedDate);
+        }
+        return formattedDate;
+    }
+
+    public static class HistoryDto {
+        private String status;
+        private int quantity;
+        private String formattedDate;
+
+        public HistoryDto(String status, int quantity, String formattedDate) {
+            this.status = status;
+            this.quantity = quantity;
+            this.formattedDate = formattedDate;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public String getFormattedDate() {
+            return formattedDate;
         }
     }
 
-/*
     @PostMapping("/{id}/addHistory")
-    public String addHistory(@PathVariable Long id, @RequestParam int quantity, @RequestParam String status) {
-        Optional<Category> category = categoryService.getCategoryById(id);
-        if (category.isPresent()) {
-            Category cat = category.get();
-            History history = new History();
-            history.setCategory(cat);
-            history.setCategoryName(cat.getName());
-            history.setQuantity(quantity);
-            history.setStatus(status);
-            historyService.addHistoryRecord(history);
-            // Update category quantity based on status
-            if (status.equals("Add")) {
-                cat.setQuantity(cat.getQuantity() + quantity);
-            } else if (status.equals("Delete")) {
-                cat.setQuantity(cat.getQuantity() - quantity);
-            }
-            categoryService.saveCategory(cat); // Save the updated category
-            return "redirect:/categories/" + id;
-        } else {
-            return "redirect:/categories";
-        }
-    }
-*/
-@PostMapping("/{id}/addHistory")
 public String addHistory(@PathVariable("id") Long id,
                          @RequestParam("quantity") int quantity,
                          @RequestParam("status") String status,

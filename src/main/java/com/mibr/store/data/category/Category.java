@@ -1,11 +1,10 @@
 package com.mibr.store.data.category;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.mibr.store.data.history.History;
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 @Entity
 @Data
 public class Category {
@@ -16,4 +15,8 @@ public class Category {
     private String name;
 
     private int quantity;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<History> history;
+
 }

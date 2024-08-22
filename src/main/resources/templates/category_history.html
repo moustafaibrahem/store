@@ -26,7 +26,7 @@
         </thead>
         <tbody>
         <tr th:each="history : ${history}">
-            <td class="date-cell" th:text="${#temporals.format(history.date.atZone('Africa/Cairo'), 'dd MMMM yyyy, HH:mm:ss')}"></td>
+            <td class="date-cell" th:text="${history.formattedDate}"></td>
             <td>
                 <span th:if="${history.status == 'Add'}" th:text="#{history.add}">إضافة</span>
                 <span th:if="${history.status == 'Delete'}" th:text="#{history.delete}">حذف</span>
