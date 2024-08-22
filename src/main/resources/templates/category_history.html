@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ar" dir="rtl">
 <head>
-    <title>Category History</title>
+    <meta charset="UTF-8">
+    <title th:text="#{history.title}">سجل الفئة</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
 <div class="container">
-    <h1 th:text="${category.name} + ' History'"></h1>
+    <h1 th:text="${category.name} + ' ' + #{history.title}">سجل الفئة</h1>
 
-    <h2>History Records</h2>
+    <h2 th:text="#{history.title}">السجل</h2>
     <table>
         <thead>
         <tr>
-            <th>Date</th>
-            <th>Action</th>
-            <th>Quantity</th>
+            <th th:text="#{history.date}">التاريخ</th>
+            <th th:text="#{history.action}">الإجراء</th>
+            <th th:text="#{history.quantity}">الكمية</th>
         </tr>
         </thead>
         <tbody>
@@ -26,20 +27,19 @@
         </tbody>
     </table>
 
-    <h2>Add New Record</h2>
+    <h2 th:text="#{history.addRecord}">إضافة سجل جديد</h2>
     <form th:action="@{/categories/{id}/addHistory(id=${category.id})}" method="post">
-        <label>Quantity:</label>
+        <label th:text="#{history.quantity}">الكمية:</label>
         <input type="number" name="quantity" required/>
-        <label>Status:</label>
+        <label th:text="#{history.status}">الحالة:</label>
         <select name="status">
-            <option value="Add">Add</option>
-            <option value="Delete">Delete</option>
+            <option value="Add" th:text="#{history.add}">إضافة</option>
+            <option value="Delete" th:text="#{history.delete}">حذف</option>
         </select>
-        <button type="submit">Submit</button>
+        <button type="submit" th:text="#{history.submit}">إرسال</button>
     </form>
 
-    <!-- Back to Categories Button -->
-    <a th:href="@{/categories}" class="btn btn-back">Back to Categories</a>
+    <a th:href="@{/categories}" class="btn btn-back" th:text="#{history.backToCategories}">العودة إلى الفئات</a>
 </div>
 </body>
 </html>

@@ -1,61 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ar" dir="rtl">
 <head>
-    <title>Categories</title>
+    <meta charset="UTF-8">
+    <title th:text="#{categories.title}">الفئات</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <script>
-        // JavaScript function to toggle the visibility of the form
         function toggleForm() {
             var form = document.getElementById("addCategoryForm");
-            if (form.style.display === "none") {
-                form.style.display = "block";
-            } else {
-                form.style.display = "none";
-            }
+            form.style.display = (form.style.display === "none") ? "block" : "none";
         }
     </script>
 </head>
 <body>
 <div class="container">
-    <h1>Categories</h1>
+    <!-- Language Switch Links -->
+    <div style="text-align: left;">
+        <a th:href="@{?lang=en}" th:classappend="${#locale.language == 'en'} ? 'active'">English</a> |
+        <a th:href="@{?lang=ar}" th:classappend="${#locale.language == 'ar'} ? 'active'">العربية</a>
+    </div>
+
+    <h1 th:text="#{categories.title}">الفئات</h1>
 
     <!-- Table to display categories -->
     <table>
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Actions</th>
+            <th th:text="#{categories.id}">الرقم</th>
+            <th th:text="#{categories.name}">الاسم</th>
+            <th th:text="#{categories.quantity}">الكمية</th>
+            <th th:text="#{categories.actions}">الإجراءات</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="category : ${categories}">
-            <td th:text="${category.id}"></td>
-            <td th:text="${category.name}"></td>
-            <td th:text="${category.quantity}"></td>
+            <td th:text="${category.id}">1</td>
+            <td th:text="${category.name}">مثال</td>
+            <td th:text="${category.quantity}">10</td>
             <td>
-                <!-- Link to view category history -->
-                <a th:href="@{/categories/{id}(id=${category.id})}">View History</a>
+                <a th:href="@{/categories/{id}(id=${category.id})}" th:text="#{categories.viewHistory}">عرض السجل</a>
             </td>
         </tr>
         </tbody>
     </table>
 
     <!-- Button to toggle the form visibility -->
-    <button onclick="toggleForm()">Add New Category</button>
+    <button onclick="toggleForm()" th:text="#{categories.addNewCategory}">إضافة فئة جديدة</button>
 
     <!-- Form to add a new category, initially hidden -->
-    <div id="addCategoryForm" style="display:none;">
-        <h2>Add New Category</h2>
+    <div id="addCategoryForm" style="display:none; margin-top:20px;">
+        <h2 th:text="#{categories.addNewCategory}">إضافة فئة جديدة</h2>
         <form th:action="@{/categories/add}" method="post">
-            <label for="name">Category Name:</label>
+            <label for="name" th:text="#{categories.categoryName}">اسم الفئة:</label>
             <input type="text" id="name" name="name" required/>
 
-            <label for="quantity">Initial Quantity:</label>
+            <label for="quantity" th:text="#{categories.initialQuantity}">الكمية الأولية:</label>
             <input type="number" id="quantity" name="quantity" value="0" readonly/>
 
-            <button type="submit">Add Category</button>
+            <button type="submit" th:text="#{categories.submit}">إضافة</button>
         </form>
     </div>
 </div>
