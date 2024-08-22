@@ -5,38 +5,40 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
-<h1 th:text="${category.name} + ' History'"></h1>
+<div class="container">
+    <h1 th:text="${category.name} + ' History'"></h1>
 
-<h2>History Records</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Date</th>
-        <th>Action</th>
-        <th>Quantity</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="history : ${history}">
-        <td th:text="${history.date}"></td>
-        <td th:text="${history.status}"></td>
-        <td th:text="${history.quantity}"></td>
-    </tr>
-    </tbody>
-</table>
+    <h2>History Records</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Action</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="history : ${history}">
+            <td th:text="${history.date}"></td>
+            <td th:text="${history.status}"></td>
+            <td th:text="${history.quantity}"></td>
+        </tr>
+        </tbody>
+    </table>
 
-<h2>Add New Record</h2>
-<form th:action="@{/categories/{id}/addHistory(id=${category.id})}" method="post">
-    <label>Quantity:</label>
-    <input type="number" name="quantity" required/>
-    <label>Status:</label>
-    <select name="status">
-        <option value="Add">Add</option>
-        <option value="Delete">Delete</option>
-    </select>
-    <button type="submit">Submit</button>
-</form>
+    <h2>Add New Record</h2>
+    <form th:action="@{/categories/{id}/addHistory(id=${category.id})}" method="post">
+        <label>Quantity:</label>
+        <input type="number" name="quantity" required/>
+        <label>Status:</label>
+        <select name="status">
+            <option value="Add">Add</option>
+            <option value="Delete">Delete</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
 
-<a th:href="@{/categories}">Back to Categories</a>
+    <a th:href="@{/categories}">Back to Categories</a>
+</div>
 </body>
 </html>
