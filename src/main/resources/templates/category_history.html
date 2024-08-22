@@ -7,9 +7,9 @@
     <script>
         function validateQuantity() {
             const quantityInput = document.getElementById("quantity");
-            if (quantityInput.value < 0) {
-                alert("الكمية لا يمكن أن تكون سالبة."); // "Quantity cannot be negative."
-                quantityInput.value = 0; // Reset to 0 if negative
+            if (quantityInput.value <= 0) {
+                alert("الكمية يجب أن تكون أكبر من صفر."); // "Quantity must be greater than zero."
+                quantityInput.value = 1; // Reset to 1 if zero or negative
             }
         }
     </script>
@@ -48,7 +48,7 @@
     <h2 th:text="#{history.addRecord}">إضافة سجل جديد</h2>
     <form th:action="@{/categories/{id}/addHistory(id=${category.id})}" method="post">
         <label th:text="#{history.quantity}">الكمية:</label>
-        <input type="number" id="quantity" name="quantity" min="0" required oninput="validateQuantity()" />
+        <input type="number" id="quantity" name="quantity" min="1" required oninput="validateQuantity()" />
         <label th:text="#{history.status}">الحالة:</label>
         <select name="status">
             <option value="Add" th:text="#{history.add}">إضافة</option>

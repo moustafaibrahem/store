@@ -38,8 +38,8 @@ public class CategoryService {
     }
     @Transactional
     public void addOrDeleteQuantity(Long categoryId, int quantity, String status, Locale locale) throws IllegalArgumentException {
-        if (quantity < 0) {
-            String errorMessage = messageSource.getMessage("error.negativeQuantity", null, locale);
+        if (quantity <= 0) {
+            String errorMessage = messageSource.getMessage("error.invalidQuantity", null, locale);
             throw new IllegalArgumentException(errorMessage);
         }
 
