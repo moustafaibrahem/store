@@ -25,7 +25,8 @@
     <table>
         <thead>
         <tr>
-            <th th:text="#{categories.id}">الرقم</th>
+            <!-- Remove the ID column -->
+            <!--<th th:text="#{categories.id}">الرقم</th>-->
             <th th:text="#{categories.name}">الاسم</th>
             <th th:text="#{categories.quantity}">الكمية</th>
             <th th:text="#{categories.actions}">الإجراءات</th>
@@ -33,7 +34,8 @@
         </thead>
         <tbody>
         <tr th:each="category : ${categories}">
-            <td th:text="${category.id}">1</td>
+            <!-- Remove the ID column -->
+            <!--<td th:text="${category.id}">1</td>-->
             <td th:text="${category.name}">مثال</td>
             <td th:text="${category.quantity}">10</td>
             <td>
