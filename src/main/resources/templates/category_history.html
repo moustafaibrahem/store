@@ -21,7 +21,10 @@
         <tbody>
         <tr th:each="history : ${history}">
             <td th:text="${history.date}"></td>
-            <td th:text="${history.status}"></td>
+            <td>
+                <span th:if="${history.status == 'Add'}" th:text="#{history.add}">إضافة</span>
+                <span th:if="${history.status == 'Delete'}" th:text="#{history.delete}">حذف</span>
+            </td>
             <td th:text="${history.quantity}"></td>
         </tr>
         </tbody>
