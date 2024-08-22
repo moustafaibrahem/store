@@ -4,15 +4,6 @@
     <meta charset="UTF-8">
     <title th:text="#{history.title}">سجل الفئة</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
-    <script>
-        function validateQuantity() {
-            const quantityInput = document.getElementById("quantity");
-            if (quantityInput.value <= 0) {
-                alert("الكمية يجب أن تكون أكبر من صفر."); // "Quantity must be greater than zero."
-                quantityInput.value = 1; // Reset to 1 if zero or negative
-            }
-        }
-    </script>
 </head>
 <body>
 <div class="container">
@@ -35,7 +26,7 @@
         </thead>
         <tbody>
         <tr th:each="history : ${history}">
-            <td th:text="${history.date}"></td>
+            <td class="date-cell" th:text="${#temporals.format(history.date.atZone('Africa/Cairo'), 'dd MMMM yyyy, HH:mm:ss')}"></td>
             <td>
                 <span th:if="${history.status == 'Add'}" th:text="#{history.add}">إضافة</span>
                 <span th:if="${history.status == 'Delete'}" th:text="#{history.delete}">حذف</span>
