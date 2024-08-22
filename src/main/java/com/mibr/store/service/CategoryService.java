@@ -38,6 +38,11 @@ public class CategoryService {
     }
     @Transactional
     public void addOrDeleteQuantity(Long categoryId, int quantity, String status, Locale locale) throws IllegalArgumentException {
+        if (quantity < 0) {
+            String errorMessage = messageSource.getMessage("error.negativeQuantity", null, locale);
+            throw new IllegalArgumentException(errorMessage);
+        }
+
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category ID"));
 

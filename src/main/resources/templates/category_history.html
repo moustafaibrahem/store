@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <title th:text="#{history.title}">سجل الفئة</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script>
+        function validateQuantity() {
+            const quantityInput = document.getElementById("quantity");
+            if (quantityInput.value < 0) {
+                alert("الكمية لا يمكن أن تكون سالبة."); // "Quantity cannot be negative."
+                quantityInput.value = 0; // Reset to 0 if negative
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -39,7 +48,7 @@
     <h2 th:text="#{history.addRecord}">إضافة سجل جديد</h2>
     <form th:action="@{/categories/{id}/addHistory(id=${category.id})}" method="post">
         <label th:text="#{history.quantity}">الكمية:</label>
-        <input type="number" name="quantity" required/>
+        <input type="number" id="quantity" name="quantity" min="0" required oninput="validateQuantity()" />
         <label th:text="#{history.status}">الحالة:</label>
         <select name="status">
             <option value="Add" th:text="#{history.add}">إضافة</option>
