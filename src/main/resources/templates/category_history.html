@@ -30,9 +30,9 @@
         </div>
         <div class="form-group form-group-button">
             <button type="submit" class="btn btn-primary" th:text="#{history.submit}">إرسال</button>
+            <a th:href="@{/categories}" class="btn btn-back" th:text="#{history.backToCategories}">العودة إلى الفئات</a>
         </div>
     </form>
-    <a th:href="@{/categories}" class="btn btn-back" th:text="#{history.backToCategories}">العودة إلى الفئات</a>
 
     <h2 th:text="#{history.title}">السجل</h2>
     <table>
