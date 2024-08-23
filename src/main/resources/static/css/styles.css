@@ -205,3 +205,12 @@ tr:hover {
 .search-btn:hover {
     background-color: #0056b3;
 }
+
+/* Row count label */
+.row-count {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}

@@ -20,6 +20,12 @@
         <button type="submit" class="btn btn-primary search-btn" th:text="#{categories.searchButton}">بحث</button>
     </form>
 
+    <!-- Row Count -->
+    <div class="row-count">
+        <label th:text="#{categories.rowCount} + ${#lists.size(categories)}"></label>
+    </div>
+
+
     <!-- Categories Table -->
     <table>
         <thead>

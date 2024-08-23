@@ -2,7 +2,6 @@ package com.mibr.store.controller;
 
 import com.mibr.store.data.category.Category;
 import com.mibr.store.service.CategoryService;
-import com.mibr.store.service.HistoryService;
 import com.mibr.store.util.NumberConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
