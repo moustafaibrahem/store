@@ -171,3 +171,37 @@ tr:hover {
         font-size: 12px;
     }
 }
+
+/* Input Styles */
+.search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: calc(100% - 120px); /* Adjusted to account for button width */
+    box-sizing: border-box;
+    margin-right: 10px; /* Space between input and button */
+}
+
+.search-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button Styles */
+.search-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
+}

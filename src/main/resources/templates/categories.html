@@ -16,8 +16,8 @@
 
     <!-- Search form -->
     <form action="/categories" method="get" style="margin-bottom: 20px;">
-        <input type="text" name="name" placeholder="ابحث عن الفئات..." />
-        <button type="submit">بحث</button>
+        <input type="text" name="name" th:placeholder="#{categories.searchPlaceholder}" class="search-input" />
+        <button type="submit" class="btn btn-primary search-btn" th:text="#{categories.searchButton}">بحث</button>
     </form>
 
     <!-- Categories Table -->
