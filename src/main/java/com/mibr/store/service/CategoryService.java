@@ -66,4 +66,13 @@ public class CategoryService {
         historyRepository.save(history);
     }
 
+    // Method to retrieve all categories
+    public List<Category> findAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    // New method to find categories by name
+    public List<Category> findCategoriesByName(String name) {
+        return categoryRepository.findByNameContainingIgnoreCase(name);
+    }
 }

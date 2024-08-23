@@ -14,6 +14,12 @@
 
     <h1 th:text="#{categories.title}">الفئات</h1>
 
+    <!-- Search form -->
+    <form action="/categories" method="get" style="margin-bottom: 20px;">
+        <input type="text" name="name" placeholder="ابحث عن الفئات..." />
+        <button type="submit">بحث</button>
+    </form>
+
     <!-- Categories Table -->
     <table>
         <thead>

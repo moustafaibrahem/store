@@ -30,10 +30,21 @@ public class CategoryController {
     private MessageSource messageSource;
 
 
-    @GetMapping
-    public String listCategories(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "categories";
+//    @GetMapping
+//    public String listCategories(Model model) {
+//        model.addAttribute("categories", categoryService.getAllCategories());
+//        return "categories";
+//    }
+    @GetMapping("")
+    public String getFilteredCategories(@RequestParam(required = false) String name, Model model) {
+        List<Category> categories;
+        if (name != null && !name.isEmpty()) {
+            categories = categoryService.findCategoriesByName(name);
+        } else {
+            categories = categoryService.findAllCategories();
+        }
+        model.addAttribute("categories", categories);
+        return "categories"; // This should match the Thymeleaf template name
     }
 
     @GetMapping("/{id}")
