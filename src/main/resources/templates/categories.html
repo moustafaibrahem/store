@@ -7,9 +7,16 @@
 </head>
 <body>
 <div class="container">
-    <div style="text-align: left;">
-        <a th:href="@{?lang=en}" th:classappend="${#locale.language == 'en'} ? 'active'">English</a> |
-        <a th:href="@{?lang=ar}" th:classappend="${#locale.language == 'ar'} ? 'active'">العربية</a>
+    <div class="header-container">
+        <!-- Slogan Image -->
+        <div class="image-container">
+            <img th:src="@{/images/slogan.jpg}" alt="Slogan" class="slogan-image"/>
+        </div>
+        <!-- Language Links -->
+        <div class="language-links">
+            <a th:href="@{?lang=en}" th:classappend="${#locale.language == 'en'} ? 'active'">English</a> |
+            <a th:href="@{?lang=ar}" th:classappend="${#locale.language == 'ar'} ? 'active'">العربية</a>
+        </div>
     </div>
 
     <h1 th:text="#{categories.title}">الفئات</h1>
@@ -24,8 +31,6 @@
     <div class="row-count">
         <label th:text="#{categories.rowCount} + ${#lists.size(categories)}"></label>
     </div>
-
-
     <!-- Categories Table -->
     <table>
         <thead>
@@ -38,7 +43,9 @@
         <tbody>
         <tr th:each="category : ${categories}">
             <td th:text="${category.name}"></td>
-            <td th:text="${category.quantity}"></td>
+            <td>
+                <span class="quantity-label" th:text="${category.quantity}"></span>
+            </td>
             <td>
                 <a th:href="@{/categories/{id}(id=${category.id})}" th:text="#{categories.viewHistory}">عرض السجل</a>
             </td>

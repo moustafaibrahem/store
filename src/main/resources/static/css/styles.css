@@ -22,6 +22,34 @@ h1, h2 {
     border-radius: 8px;
 }
 
+/* Header container to align language links and image */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Style for the language links */
+.language-links a {
+    font-size: 14px;
+    text-decoration: none;
+    color: #007bff;
+    margin: 0 5px;
+}
+
+.language-links a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Style for the slogan image */
+.slogan-image {
+    max-width: 150px;  /* Smaller width */
+    height: auto;
+    border-radius: 8px;  /* Optional: Adds rounded corners */
+}
+
 /* Alert Styles */
 .alert {
     padding: 10px 20px;

@@ -7,6 +7,19 @@
 </head>
 <body>
 <div class="container">
+    <div class="header-container">
+        <!-- Slogan Image -->
+        <div class="image-container">
+            <img th:src="@{/images/slogan.jpg}" alt="Slogan" class="slogan-image"/>
+        </div>
+
+        <!-- Language Links -->
+        <div class="language-links">
+            <a th:href="@{?lang=en}" th:classappend="${#locale.language == 'en'} ? 'active'">English</a> |
+            <a th:href="@{?lang=ar}" th:classappend="${#locale.language == 'ar'} ? 'active'">العربية</a>
+        </div>
+    </div>
+
     <h1 th:text="${category.name} + ' ' + #{history.title}">سجل الفئة</h1>
 
     <!-- Display error message if exists -->
